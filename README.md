@@ -18,6 +18,12 @@ After that you have web server and graphql endpoint running at http://127.0.0.1:
 
 ## Issue
 
+At async GQL endpoint
+
+http://127.0.0.1:8000/graphql
+
+* at the same time sync will works well http://127.0.0.1:8000/graphql/sync
+
 Query
 
 ```json
