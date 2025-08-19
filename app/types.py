@@ -30,3 +30,8 @@ class UserInput:
             raise ValidationError(
                 "Firstname and lastname cannot be the same"
             )
+        
+    def validate_username(self, info, value: str, ) -> str:
+        if get_user_model().objects.filter(email__startswith=value + "@").exists():
+            raise ValidationError("Some user have similar email to your username")
+        return value

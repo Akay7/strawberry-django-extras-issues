@@ -21,8 +21,8 @@ After that you have web server and graphql endpoint running at http://127.0.0.1:
 Query
 
 ```json
-mutation MyMutation ($username: String!, $firstName: String, $lastName: String) {
-  createUser(input: {username: $username, password: "123", firstName: $firstName, lastName: $lastName}){
+mutation MyMutation ($username: String!, $firstName: String, $lastName: String, $email: String) {
+  createUser(data: {username: $username, password: "123", firstName: $firstName, lastName: $lastName, email: $email}){
     id
   }
 }
@@ -32,17 +32,38 @@ Variables
 
 ```json
 {
-  "username": "user2",
-  "firstName": "Ivanov",
-  "lastName": "Ivanov"
+  "username": "user",
+  "firstName": "Vlad",
+  "lastName": "Valov",
+  "email": "user@example.com"
 }
 ```
 
-Will not have validations up until moment when changed settings to
+During creation on check
 
 ```python
-STRAWBERRY_DJANGO = {
-    # "MUTATIONS_DEFAULT_ARGUMENT_NAME": "input",
-    "MUTATIONS_DEFAULT_ARGUMENT_NAME": "data",
+    def validate_username(self, info, value: str, ) -> str:
+        if get_user_model().objects.filter(email__startswith=value + "@").exists():
+```
+
+will be exception 
+
+```json
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "You cannot call this from an async context - use a thread or sync_to_async.",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": [
+        "createUser"
+      ]
+    }
+  ]
 }
 ```

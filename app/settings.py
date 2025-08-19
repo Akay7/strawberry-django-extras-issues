@@ -84,6 +84,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
 STRAWBERRY_DJANGO = {
-    "MUTATIONS_DEFAULT_ARGUMENT_NAME": "input",
-    # "MUTATIONS_DEFAULT_ARGUMENT_NAME": "data",  # but with that line will work
+    # "MUTATIONS_DEFAULT_ARGUMENT_NAME": "input",
+    "MUTATIONS_DEFAULT_ARGUMENT_NAME": "data",  # but with that line will work
 }   
